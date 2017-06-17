@@ -19,7 +19,7 @@ form = """
     </style>
 </head>
 <body>
-    <form action="/hello">
+    <form action="/hello" method="post">
         <label for="first-name">First Name:</label>
         <input id="first-n ame" type="text" name="first_name">
         <input type="submit">
@@ -32,9 +32,9 @@ form = """
 def index():
     return form
 
-@app.route("/hello")
+@app.route("/hello", methods=['post'])
 def hello():
-    first_name = request.args.get('first_name')
+    first_name = request.form['first_name']
     return '<h1 style="color:#333;font-family:sans-serif;text-align:center;padding-top:20px">Hello, ' + first_name + '!</h1>'
 
 app.run()
