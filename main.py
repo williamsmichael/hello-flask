@@ -8,7 +8,7 @@ form = """
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title> | mdw</title>
+    <title>Class 2.4 | mdw</title>
     <meta name="description" content="Portland LaunchCode LC101">
     <meta name="author" content="mdw">
     <style>
@@ -28,13 +28,77 @@ form = """
 </html>
 """
 
-@app.route("/")
-def index():
-    return form
+time_form = """
+    <style>
+        .error {{ color: red;}}
+    </style>
+    <h1>Validate Time</h1>
+    <form method="POST">
+        <label>Hours (24-hour format)
+            <input type="text" name="hours" value='{hours}'>
+        </label>
+        <p class="error">{hours_error}</p>
+        <label>Minutes
+            <input type="text" name="minutes" value='{minutes}'>
+        </label>
+        <p class="error">{minutes_error}</p>
+        <input type="submit" value="Convert">
+    </form>
+    """
 
-@app.route("/hello", methods=['post'])
+@app.route('/validate-time')
+def display_time_form():
+    return time_form.format(hours='', hours_error='', minutes='', minutes_error='')
+
+
+def is_integer(num):
+    try:
+        int(num)
+        return True
+    except ValueError:
+        return False
+
+
+@app.route('/validate-time', methods=['POST'])
+def validate_time():
+    hours = request.form['hours']
+    minutes = request.form['minutes']
+
+    hours_error = ''
+    minutes_error = ''
+
+    if not is_integer(hours):
+        hours_error = 'Not a valid integer'
+        hours = ''
+    else:
+        hours = int(hours)
+        if hours > 23 or hours < 0:
+            hours_error = 'Hour value out of range (0-23)'
+            hours = ''
+
+    if not is_integer(minutes):
+        minutes_error = 'Not a valid integer'
+        minutes = ''
+    else:
+        minutes = int(minutes)
+        if minutes > 59 or minutes < 0:
+            minutes_error = 'Minutes value out of range (0-59)'
+            minutes = ''
+
+    if not hours_error and not minutes_error:
+        return "Success!"
+    else:
+        return time_form.format(hours_error=hours_error, minutes_error=minutes_error, hours=hours, minutes=minutes)
+
+
+@app.route('/hello', methods=['POST'])
 def hello():
     first_name = request.form['first_name']
     return '<h1 style="color:#333;font-family:sans-serif;text-align:center;padding-top:20px">Hello, ' + first_name + '!</h1>'
+
+
+@app.route("/")
+def index():
+    return form
 
 app.run()
