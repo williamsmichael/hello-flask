@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Validate Time</h1>
+    <form method="POST">
+        <label>Hours (24-hour format)
+            <input type="text" name="hours" value='{{hours}}'>
+        </label>
+        <p class="error">{{hours_error}}</p>
+        <label>Minutes
+            <input type="text" name="minutes" value='{{minutes}}'>
+        </label>
+        <p class="error">{{minutes_error}}</p>
+        <input type="submit" value="Convert">
+    </form>
+
+{% endblock %}
