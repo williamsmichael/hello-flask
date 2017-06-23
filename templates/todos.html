@@ -12,13 +12,13 @@
     
     <hr>
 
-    {% if todos|length == 0 %}
+    {% if todo_list|length == 0 %}
         <p>No tasks yet</p>
 
     {% else %}
         <ul>
 
-            {% for task in todos %}
+            {% for task in todo_list %}
                 <li>{{task}}</li>
 
             {% endfor %}

@@ -68,15 +68,15 @@ def valid_time():
     return render_template('valid_time.html', title="valid_time", time=time)
 
 
-todos = []
+todo_list = []
 
 @app.route('/todos', methods=['GET', 'POST'])
 def todos():
 
     if request.method == 'POST':
         task = request.form['task']
-        todos.append(task)
+        todo_list.append(task)
 
-    return render_template('todos.html', title="TODOs", todos=todos)
+    return render_template('todos.html', title="TODOs", todo_list=todo_list)
 
 app.run()
