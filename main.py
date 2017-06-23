@@ -59,7 +59,7 @@ def validate_time():
         time = str(hours) + ':' + str(minutes)
         return redirect('/valid-time?time={0}'.format(time))
     else:
-        return render_template('time_form.html', title="time_form", hours_error=hours_error, minutes_error=minutes_error, hours=hours, minutes=minutes)
+        return krender_template('time_form.html', title="time_form", hours_error=hours_error, minutes_error=minutes_error, hours=hours, minutes=minutes)
 
 
 @app.route('/valid-time')
@@ -68,15 +68,15 @@ def valid_time():
     return render_template('valid_time.html', title="valid_time", time=time)
 
 
-tasks = []
+todos = []
 
 @app.route('/todos', methods=['GET', 'POST'])
 def todos():
 
     if request.method == 'POST':
         task = request.form['task']
-        tasks.append(task)
+        todos.append(task)
 
-    return render_template('todos.html', title="TODOs", tasks=tasks)
+    return render_template('todos.html', title="TODOs", todos=todos)
 
 app.run()
